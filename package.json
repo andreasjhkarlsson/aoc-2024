@@ -1,0 +1,32 @@
+{
+  "name": "aoc-2024",
+  "version": "1.0.0",
+  "description": "Advent of Code 2024",
+  "main": "aoc-2024.unit.spec.js",
+  "scripts": {
+    "test": "mocha build/test",
+    "start": "node build/aoc-2024.js",
+    "watch": "npx tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreasjhkarlsson/aoc-2024.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreasjhkarlsson/aoc-2024/issues"
+  },
+  "homepage": "https://github.com/andreasjhkarlsson/aoc-2024#readme",
+  "devDependencies": {
+    "@types/chai": "4.3.0",
+    "@types/mocha": "^10.0.10",
+    "chai": "4.3.0",
+    "mocha": "^11.0.1",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@types/node": "^22.10.1"
+  }
+}
