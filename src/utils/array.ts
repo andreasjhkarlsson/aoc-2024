@@ -9,6 +9,7 @@ declare global {
         sumBy(fn: ((e: T) => number)): number;
         instancesOf(e: T): number;
         pairwise(): [T,T][];
+        middle(): T;
     }
 }
 
@@ -37,4 +38,8 @@ Array.prototype.pairwise = function<T>(this: T[]): [T,T][] {
     }
 
     return result;    
+}
+
+Array.prototype.middle = function<T>(this: T[]) {
+    return this[Math.floor(this.length / 2)];
 }
