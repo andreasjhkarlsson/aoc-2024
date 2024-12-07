@@ -8,6 +8,7 @@ declare global {
         zip<U>(other: U[]): [T,U][];
         sumBy(fn: ((e: T) => number)): number;
         instancesOf(e: T): number;
+        pairwise(): [T,T][];
     }
 }
 
@@ -26,4 +27,14 @@ Array.prototype.sumBy = function<T>(this: T[], fn: (e: T) => number) {
 
 Array.prototype.instancesOf = function<T>(this: T[], a: T) {
     return this.filter((b) => a === b).length;
+}
+
+Array.prototype.pairwise = function<T>(this: T[]): [T,T][] {
+    const result: [T,T][] = [];
+
+    for (let i=1;i<this.length;i++) {
+        result.push([this[i-1], this[i]]);
+    }
+
+    return result;    
 }

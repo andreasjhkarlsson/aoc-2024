@@ -1,8 +1,9 @@
 import "./utils/array";
+import { splitIntoLines } from "./utils/string";
 
 export default function (input: string): [number, number] {
    
-    const lines = input.split("\n");
+    const lines = splitIntoLines(input);
 
     const lists = lines.map((line) => line.split("   ").map((s) => parseInt(s)))
 
