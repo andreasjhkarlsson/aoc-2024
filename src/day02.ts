@@ -38,6 +38,5 @@ export default function(input: string): [number, number] {
 
     const validDampenedReports = reports.filter((r) => isValid(r, true)).length;
 
-
     return [validReports,validDampenedReports]
 }
