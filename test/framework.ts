@@ -1,8 +1,5 @@
-
 import { expect } from "chai";
 import * as fs from "node:fs";
-
-console.log("Advent of Code 2024 🎄");
 
 export type Solver = (input: string) => [number, number];
 
