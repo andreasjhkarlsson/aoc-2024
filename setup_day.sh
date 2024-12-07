@@ -22,6 +22,8 @@ mkdir -p src data
 
 touch "$SRC_FILE" "$SAMPLE_INPUT_FILE" "$INPUT_FILE"
 
+printf "export default function(input: string): [number, number] { return [0,0]; }" > "$SRC_FILE"
+
 # Provide feedback
 echo "Created files:"
 echo "  $SRC_FILE"

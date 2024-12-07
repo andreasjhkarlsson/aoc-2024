@@ -12,10 +12,18 @@ export function day(day, fn: (this: Mocha.Suite) => void) {
     describe(`Day ${day}`, fn);
 }
 
-export function verifySampleInput(file, expectedSolution: [number, number], solver: Solver) {
+export function verifySampleInput(file: string | [string,string], expectedSolution: [number, number], solver: Solver) {
     it("solves the sample input", () => {
-        const input = readInput(file);
-        const [part1, part2] = solver(input); 
+
+        let part1, part2;
+        if (Array.isArray(file)) {
+            const input1 = "";
+        } else {
+
+
+            const input = readInput(file);
+            [part1, part2] = solver(input); 
+        }
         
         expect(part1).to.be.eq(expectedSolution[0], "Part 1 of sample solution is not correct");
         expect(part2).to.be.eq(expectedSolution[1], "Part 2 of sample solution is not correct");
