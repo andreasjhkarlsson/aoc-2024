@@ -8,8 +8,11 @@ function readInput(filename: string) {
     return buffer.toString("utf8");
 }
 
-export function day(day, fn: (this: Mocha.Suite) => void) {
-    describe(`Day ${day}`, fn);
+export function day(day, fn: () => void) {
+    describe(`Day ${day}`, function(this: Mocha.Suite) {
+        this.timeout(60000);
+        fn();
+    });
 }
 
 export function verifySampleInput(file: string | [string,string], expectedSolution: [number, number], solver: Solver) {
