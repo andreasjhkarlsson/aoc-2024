@@ -55,7 +55,6 @@ function* findAntiNodesInDirection([x,y]: [number, number], [dx,dy]: [number, nu
         if (!inBounds([x,y], map))
             break;
         yield [x,y];
-
     } while (limit ? --limit: true);
 }
 
