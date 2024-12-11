@@ -22,8 +22,6 @@ export function verifySampleInput(file: string | [string,string], expectedSoluti
         if (Array.isArray(file)) {
             const input1 = "";
         } else {
-
-
             const input = readInput(file);
             [part1, part2] = solver(input); 
         }
