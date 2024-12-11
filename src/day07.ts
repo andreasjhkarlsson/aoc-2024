@@ -8,11 +8,11 @@ type Calibration = {
 type Operator = (a: number, b: number) => number;
 
 function add(a: number, b: number) {
-    return a+b;
+    return a + b;
 }
 
 function multiply(a: number, b: number) {
-    return a*b;
+    return a * b;
 }
 
 function concat(a: number, b: number) {
@@ -37,18 +37,17 @@ function solve(target: number, operands: number[], operators: Operator[], acc?: 
     return false;
 }
 
-export default function(input: string): [number, number] {
-
+export default function (input: string): [number, number] {
     const lines = splitIntoLines(input);
 
     const calibrations: Calibration[] = [];
 
     for (const line of lines) {
-        const splitted = line.split(": ");
+        const split = line.split(": ");
 
         calibrations.push({
-            result: parseInt(splitted[0]),
-            operands: splitted[1].split(" ").map((s) => parseInt(s))
+            result: parseInt(split[0]),
+            operands: split[1].split(" ").map((s) => parseInt(s))
         });
     }
 

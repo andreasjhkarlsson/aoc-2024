@@ -1,4 +1,3 @@
-
 type Mul = { type: "mul", operands: [number, number]};
 type Do = { type: "do" };
 type Dont = { type: "don't" };
@@ -67,9 +66,9 @@ export default function(input: string): [number, number] {
                 enabled = false;
                 break;
             case "mul":
-                const [a,b] = instruction.operands;
-                part1 += a*b;
-                if (enabled) part2 += a*b;
+                const [a, b] = instruction.operands;
+                part1 += a * b;
+                if (enabled) part2 += a * b;
                 break;
         }
     }

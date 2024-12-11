@@ -3,11 +3,10 @@ import { splitIntoLines } from "./utils/string";
 type PageOrderRule = [number, number];
 type Update = number[];
 
-type Graph = {[id: number]: Edge};
-type Edge = { val: number, deps: number[]};
+type Graph = { [id: number]: Edge };
+type Edge = { val: number, deps: number[] };
 
 function isSorted(update: Update, graph: Graph) {
-
     const printed: number[] = [];
 
     for (const page of update) {
@@ -29,7 +28,6 @@ function resortUpdate(update: Update, graph: Graph) {
     let printed: number[] = [];
 
     for (const page of update) {
-
         const edge = graph[page];
 
         if (edge) {
@@ -91,7 +89,7 @@ function parseInput(input: string): [PageOrderRule[], Update[]] {
     return [rules, updates];
 }
 
-export default function(input: string): [number, number] {
+export default function (input: string): [number, number] {
 
     const [rules, updates] = parseInput(input);
 
