@@ -6,21 +6,16 @@ type Block = {
 
 type Disk = Block[];
 
-function* getRTLUsedBlocks(disk: Disk): Generator<[Block, number]> {
-    for (let i=disk.length-1;i>=0;i--) {
-        if (disk[i].id !== undefined) yield [disk[i], i];
+function getLastUsedBlock(disk: Disk) {
+    for (let i = disk.length - 1; i >= 0; i--) {
+        if (disk[i].id !== undefined) return [disk[i], i] as const;
     };
 }
 
-function* getLTREmptyBlocks(disk: Disk): Generator<[Block, number]> {
-    for (let i=0; i<disk.length; i++) {
-        if (disk[i].id === undefined) yield [disk[i], i];
+function getFirstEmptyBlock(disk: Disk) {
+    for (let i=0; i< disk.length; i++) {
+        if (disk[i].id === undefined) return [disk[i], i] as const;
     }
-}
-
-function first(blocks: Generator<[Block, number]>) {
-    for (const block of blocks)
-        return block;
 }
 
 function isCompact(disk: Disk) {
@@ -32,12 +27,8 @@ function isCompact(disk: Disk) {
     return true;
 }
 
-function copyDisk(disk: Disk) {
-    const copy = [] as Disk;
-    for (const block of disk) {
-        copy.push({id: block.id, length: block.length });
-    }
-    return copy;
+function copyDisk(disk: Disk): Disk {
+    return disk.map(block => ({id: block.id, length: block.length }));
 }
 
 function compact(disk: Disk) {
@@ -45,47 +36,44 @@ function compact(disk: Disk) {
     disk = copyDisk(disk);
 
     while (!isCompact(disk)) {
-        const [lastUsedBlock, _] = first(getRTLUsedBlocks(disk));
-        const [firstEmptyBlock, firstEmptyBlockLocation] = first(getLTREmptyBlocks(disk));
 
-        const moveCount = Math.min(lastUsedBlock.length,firstEmptyBlock.length);
+        const [lastUsedBlock, _] = getLastUsedBlock(disk);
+        const [firstEmptyBlock, firstEmptyBlockLocation] = getFirstEmptyBlock(disk);
+
+        const moveCount = Math.min(lastUsedBlock.length, firstEmptyBlock.length);
 
         lastUsedBlock.length -= moveCount;
 
-        if (disk[firstEmptyBlockLocation-1].id === lastUsedBlock.id) {
-            disk[firstEmptyBlockLocation-1].length += moveCount;
+        if (disk[firstEmptyBlockLocation - 1].id === lastUsedBlock.id) {
+            disk[firstEmptyBlockLocation - 1].length += moveCount;
         } else {
-            disk.splice(firstEmptyBlockLocation,0,{id: lastUsedBlock.id, length: moveCount});
+            disk.splice(firstEmptyBlockLocation, 0, { id: lastUsedBlock.id, length: moveCount });
         }
 
         firstEmptyBlock.length -= moveCount;
 
-        if (disk[disk.length-1].id === undefined) {
-            disk[disk.length-1].length += moveCount;
+        if (disk[disk.length - 1].id === undefined) {
+            disk[disk.length - 1].length += moveCount;
         } else {
-            disk.push({length: moveCount});
+            disk.push({ length: moveCount });
         }
 
-        disk = disk.filter(block => block.length !== 0);
+        compactEmptySpace(disk);
     }
 
     return disk;
 }
 
 function compactEmptySpace(disk: Disk) {
-    for (let i=disk.length-1;i>0;i--) {
-        if (disk[i].id === undefined) {
-            if (disk[i-1].id === undefined) {
-                disk[i-1].length += disk[i].length;
-                disk.splice(i,1);
-                compactEmptySpace(disk);
-                return;
-            } else if (disk[i].length === 0) {
-                disk.splice(i,1);
-                compactEmptySpace(disk);
-                return;
-            }
-
+    for (let i = disk.length - 1; i >= 0; i--) {
+        if (disk[i].id === undefined && i > 0 && disk[i - 1].id === undefined) {
+            disk[i - 1].length += disk[i].length;
+            disk.splice(i,1);
+            return compactEmptySpace(disk);  
+        }
+        if (disk[i].length === 0) {
+            disk.splice(i, 1);
+            return compactEmptySpace(disk);
         }
     }
 }
@@ -122,7 +110,7 @@ function intelliCompact(disk: Disk) {
 function* clusters(disk: Disk) {
     let pos = 0;
     for (let i = 0; i < disk.length; i++) {
-        for (let j=0; j < disk[i].length; j++) {
+        for (let j = 0; j < disk[i].length; j++) {
             yield [pos++, disk[i].id] as const;
         }
     }
@@ -130,7 +118,7 @@ function* clusters(disk: Disk) {
 
 function checksum(disk: Disk) {
     let checksum = 0;
-    for (const [ position, id] of clusters(disk)) {
+    for (const [ position, id ] of clusters(disk)) {
         checksum += (id ?? 0) * position;
     } 
     return checksum;
