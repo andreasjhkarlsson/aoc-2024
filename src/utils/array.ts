@@ -10,6 +10,7 @@ declare global {
         instancesOf(e: T): number;
         pairwise(): [T, T][];
         middle(): T;
+        findLastIndex(fn: (e: T, idx: number, obj: T[]) => unknown): number;
     }
 }
 
@@ -42,4 +43,11 @@ Array.prototype.pairwise = function<T>(this: T[]): [T, T][] {
 
 Array.prototype.middle = function<T>(this: T[]) {
     return this[Math.floor(this.length / 2)];
+}
+
+Array.prototype.findLastIndex = function<T>(this: T[], fn: (e: T, idx: number, obj: T[]) => unknown): number {
+    for (let i=this.length-1;i>=0;i--) {
+        if (fn(this[i], i, this)) return i;
+    }
+    return -1;
 }
