@@ -7,6 +7,7 @@ import { default as day6 } from "../src/day06"
 import { default as day7 } from "../src/day07"
 import { default as day8 } from "../src/day08"
 import { default as day9 } from "../src/day09"
+import { default as day10 } from "../src/day10"
 import { day, solveChallenge, verifySampleInput } from "./framework";
 
 before(() => console.log("Advent of Code 2024 🎄"));
@@ -54,4 +55,9 @@ day(8, () => {
 day(9, () => {
     verifySampleInput("day09.sample.input", [1928, 2858], day9);
     solveChallenge("day09.input", day9);
+});
+
+day(10, () => {
+    verifySampleInput("day10.sample.input", [36, 81], day10);
+    solveChallenge("day10.input", day10);
 });
