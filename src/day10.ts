@@ -32,8 +32,6 @@ function* findElevationPoints(map: Map, elevation: number) {
 const trailheads = (map: Map) => findElevationPoints(map, 0);
 const trailtails = (map: Map) => findElevationPoints(map, 9);
 
-
-
 function pathsTo([currentX, currentY]: Position, [targetX, targetY]: Position, map: Map) {
     const currentHeight = map[currentY][currentX];
     let paths = 0;
